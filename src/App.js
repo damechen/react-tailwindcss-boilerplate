@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ToastContainer } from "react-toastify";
+import { Switch, Route, withRouter } from "react-router-dom";
+import loadable from "@loadable/component";
+import ErrorBoundary from "./utils/ErrorBoundary";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
+
+const LandingPage = loadable(() =>
+  import("./pages/LandingPage/LandingPage" /* webpackChunkName: "t-0" */)
+);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundary>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+      </Switch>
+    </ErrorBoundary>
   );
 }
 
-export default App;
+export default withRouter(App);
